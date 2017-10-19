@@ -5,6 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import store from './store';
 import {Provider} from 'react-redux';
+import ActionCreators from './ActionCreators';
+store.dispatch(ActionCreators.requestProducts())
 ReactDOM.render(
     <Provider store={store}>
         <App />

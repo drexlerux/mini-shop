@@ -4,7 +4,7 @@ import store from '../store';
 import ActionCreators from '../ActionCreators';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-export default class ProductList extends Component {
+class ProductList extends Component {
     constructor(props){
     	super(props);
     	this.state = {
@@ -62,3 +62,5 @@ export default class ProductList extends Component {
         this.setState({alert: null})
     }
 }
+
+export default ProductList;

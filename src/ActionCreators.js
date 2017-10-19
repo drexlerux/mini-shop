@@ -10,6 +10,13 @@ const ActionCreators = {
             type: 'REMOVE_FROM_CART',
             product
         }
+    },
+    toggleAlert(alert){
+        console.log(alert)
+        return {
+            type: 'TOGGLE_ALERT',
+            alert
+        }
     }
 }
 

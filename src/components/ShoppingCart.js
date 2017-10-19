@@ -1,11 +1,11 @@
-import React,{Component} from 'react';
+import React from 'react';
 import { Col, Panel, Button, Glyphicon, Table} from 'react-bootstrap';
 import ActionCreators from '../ActionCreators';
 import {connect} from 'react-redux';
 
 const ShoppingCart = ({cart, _removeFromCart}) => {
 
-    let total = cart.reduce((sum, product)=> sum + product.price , 0);
+    let total = cart.reduce((sum, product)=> (sum + (product.price*product.quantity)) , 0);
 
     return (
         <Col xs={12} sm={12} md={4} lg={4}>
@@ -15,7 +15,9 @@ const ShoppingCart = ({cart, _removeFromCart}) => {
                         { cart.map(product => (
                             <tr key={product.id}>
                                 <td>{product.name}</td>
+                                <td className="text-right">{product.quantity}</td>
                                 <td className="text-right">${product.price}</td>
+                                <td className="text-right">${product.price * product.quantity}</td>
                                 <td className="text-right">
                                     <Button bsSize="xsmall" bsStyle="danger" onClick={()=>_removeFromCart(product)}>
                                         <Glyphicon glyph="trash" />

@@ -82,7 +82,7 @@ const mapDispatchToProps = dispatch => {
             }
             // Cuando se realiza el dispatch se llama la funcion reductora
 
-            rProduct = Object.assign({quantity: parseInt(productQuantityOrdered)}, product);
+            rProduct = Object.assign({quantity: parseInt(productQuantityOrdered, 10)}, product);
             quantityTextInput.value = '';
             dispatch(ActionCreators.addToCart(rProduct));
         }

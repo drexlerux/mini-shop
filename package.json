@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "raven-for-redux": "^1.1.1",
+    "raven-js": "^3.19.1",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.3",
     "react-bootstrap-sweetalert": "^4.0.0",

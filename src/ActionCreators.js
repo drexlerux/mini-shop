@@ -12,7 +12,6 @@ const ActionCreators = {
         }
     },
     toggleAlert(alert){
-        console.log(alert)
         return {
             type: 'TOGGLE_ALERT',
             alert

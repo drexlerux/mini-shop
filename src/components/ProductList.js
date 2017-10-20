@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Col, Row, Thumbnail, Button, Glyphicon, InputGroup, FormControl} from 'react-bootstrap';
 import ActionCreators from '../ActionCreators';
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -16,33 +16,43 @@ let QuantityInput = (props) =>{
     )
 }
 
+class ProductList extends Component {
 
-const ProductList = ({products, cart, alert, _addToCart}) => {
-    let quantityTextInput = {};
-    return(
-        <div className="class-name">
-            <Col xs={12} sm={12} md={8} lg={8}>
-                <Row>
-                    { products.map(product=>(
-                        <Col xs={12} sm={6} md={4} lg={4} key={product.id}>
-                            <Thumbnail src={product.image} alt="242x200">
-                                <h3>{product.name}</h3>
-                                <p>Price: ${product.price}</p>
-                                <p>
-                                  <Button bsStyle="primary" onClick={() => _addToCart(product, cart, quantityTextInput[product.id])}>
-                                        <Glyphicon glyph="shopping-cart"/> Add to card
-                                  </Button>
+    constructor(props){
+        super(props);
+        this.quantityTextInput = {};
+    }
+    render(){
+        const {products, cart, alert, _addToCart} = this.props
+        return(
+            <div className="class-name">
+                <Col xs={12} sm={12} md={8} lg={8}>
+                    <Row>
+                        { products.map(product=>(
+                            <Col xs={12} sm={6} md={4} lg={4} key={product.id}>
+                                <Thumbnail src={product.image} alt="242x200">
+                                    <h3>{product.name}</h3>
+                                    <p>Price: ${product.price}</p>
+                                    <p>
+                                        <Button bsStyle="primary" onClick={() => _addToCart(product, cart, this.quantityTextInput[product.id])}>
+                                            <Glyphicon glyph="shopping-cart"/> Add to card
+                                        </Button>
 
-                                </p>
-                                <QuantityInput inputRef={input => quantityTextInput[product.id] = input }/>
-                            </Thumbnail>
-                        </Col>)
-                    )}
-                </Row>
-                {alert}
-            </Col>
-        </div>
-    )
+                                    </p>
+                                    <QuantityInput inputRef={input => this.quantityTextInput[product.id] = input }/>
+                                </Thumbnail>
+                            </Col>)
+                        )}
+                    </Row>
+                    {alert}
+                </Col>
+            </div>
+        )
+    }
+
+    componentDidMount() {
+        this.props._loadProducts()
+    }
 }
 
 const mapStateToProps = state =>{
@@ -85,6 +95,10 @@ const mapDispatchToProps = dispatch => {
             rProduct = Object.assign({quantity: parseInt(productQuantityOrdered, 10)}, product);
             quantityTextInput.value = '';
             dispatch(ActionCreators.addToCart(rProduct));
+        },
+
+        _loadProducts(){
+            dispatch(ActionCreators.requestProducts())
         }
     }
 }

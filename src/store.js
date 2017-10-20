@@ -1,33 +1,7 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import Raven from "raven-js";
 import thunk from 'redux-thunk';
-import ActionFlags from './ActionFlags';
-
-const reducer = (state, action) => {
-    if(action.type === ActionFlags.REPLACE_PRODUCTS){
-        return {
-            ...state,
-            products: action.products
-        }
-    }else if(action.type === ActionFlags.ADD_TO_CART){
-        return {
-            ...state,
-            cart: state.cart.concat(action.product)
-        }
-    }else if(action.type === ActionFlags.REMOVE_FROM_CART){
-        return {
-            ...state,
-            cart: state.cart.filter(item=>item.id !== action.product.id)
-        }
-    }else if(action.type === ActionFlags.TOGGLE_ALERT){
-        return {
-            ...state,
-            alert: action.alert
-        }
-    }
-
-    return state
-}
+import {products, cart, alert} from './reducers'
 
 const logger = store => next => action => {
   console.log('dispatching', action)
@@ -53,7 +27,6 @@ const crashReporter = store => next => action => {
 
 // El Create store recibe la funcion reductora y un obj con el estado inicial
 export default createStore(
-    reducer,
-    {cart: [], products: [], alert: null},
+    combineReducers({products, cart, alert}),
     applyMiddleware(logger, crashReporter, thunk)
 );
